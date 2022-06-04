@@ -21,6 +21,6 @@ class Customer extends Model
 
     public function contact()
     {
-        return $this->hasMany('App\Models\CustomerContact');
+        return $this->hasMany('App\Models\CustomerContact', 'id_customer', 'id');
     }
 }

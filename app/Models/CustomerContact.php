@@ -11,10 +11,16 @@ class CustomerContact extends Model
 
     protected $table = 'customer_contact';
 
+    protected $fillable = [
+        'nome_contact',
+        'cpf',
+        'email_contact',
+    ];
+
     public $timestamps = false;
 
     public function customerContact()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Customer', 'id_customer', 'id');
     }
 }
