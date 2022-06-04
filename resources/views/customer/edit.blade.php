@@ -1,6 +1,9 @@
 @extends('layout.app', [
     'title' => 'Simple Crud',
-    'scripts' => [],
+    'scripts' => [
+        'js/jquery.mask.js',
+        'js/mask.js',
+    ],
 ])
 
 @section('content')
@@ -16,7 +19,7 @@
                 <div class="row">
                     <div class="mb-3 col-md-3 col-sm-12">
                         <label for="cnpj">CNPJ</label>
-                        <input type="text" class="form-control @if ($errors->first('cnpj')) {{ 'is-invalid' }} @endif"
+                        <input type="text" class="cnpj form-control @if ($errors->first('cnpj')) {{ 'is-invalid' }} @endif"
                             id="cnpj" name="cnpj" value="{{ preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', "\$1.\$2.\$3/\$4-\$5", $customer['cnpj']) }}">
                         @if ($errors->first('cnpj'))
                             <div class="invalid-feedback">{{ $errors->first('cnpj') }}</div>

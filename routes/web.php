@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\CustomerController@index')->name('customer.index');
 //Nomeando por questões de simplicidade, mas sei que não é necessário
 
-Route::resource('customer', 'App\Http\Controllers\CustomerController')->except('index', 'create');
+Route::resource('customer', 'App\Http\Controllers\CustomerController')->except('index', 'create', 'show');
 
 Route::prefix('customer/{customer}/')->group(function () {
-    Route::resource('contact', 'App\Http\Controllers\CustomerContactController');
+    Route::resource('contact', 'App\Http\Controllers\CustomerContactController')->except('show', 'create');
+
+    // Rota usado no AJAX para alterar o status do Customer
+    Route::put('change-status', 'App\Http\Controllers\CustomerController@changeStatus');
 });

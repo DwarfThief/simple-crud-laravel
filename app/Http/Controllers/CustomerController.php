@@ -54,17 +54,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Customer  $customer
@@ -119,6 +108,51 @@ class CustomerController extends Controller
         }
     }
 
+    /**
+     * Switch the status of the customer
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function changeStatus(Request $request, Customer $customer)
+    {
+        try {
+            $customer = Customer::findOrFail($request->id);
+
+            if ($customer) {
+                switch ($customer->status) {
+                    case 1:
+                        $customer->status = 0;
+                        $customer->save();
+
+                        $activated = false;
+                        break;
+                    case 0:
+                        $customer->status = 1;
+                        $customer->save();
+
+                        $activated = true;
+                        break;
+                }
+
+                return response()->json([
+                    "sucess" => "true",
+                    "activated" => $activated,
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                "sucess" => "false",
+                "textMessage" => $th,
+            ]);
+        }
+    }
+
+    /**
+     * Receiving an string with CNPJ structure and returning with just the numbers.
+     *
+     * @param  string $cnpj
+     * @return string
+     */
     private function cleanCNPJ(string $cnpj)
     {
         $cnpj = trim($cnpj);

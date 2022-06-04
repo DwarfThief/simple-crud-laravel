@@ -1,6 +1,6 @@
 @extends('layout.app', [
     'title' => 'Simple Crud',
-    'scripts' => [],
+    'scripts' => ['js/jquery.mask.js', 'js/mask.js', 'js/change-status.js'],
 ])
 
 @section('content')
@@ -16,8 +16,9 @@
                 <div class="row">
                     <div class="mb-3 col-md-3 col-sm-12">
                         <label for="cnpj">CNPJ</label>
-                        <input type="text" class="form-control @if ($errors->first('cnpj')) {{ 'is-invalid' }} @endif"
-                            id="cnpj" name="cnpj" value="{{ old('cnpj') }}">
+                        <input type="text"
+                            class="cnpj form-control @if ($errors->first('cnpj')) {{ 'is-invalid' }} @endif" id="cnpj"
+                            name="cnpj" value="{{ old('cnpj') }}">
                         @if ($errors->first('cnpj'))
                             <div class="invalid-feedback">{{ $errors->first('cnpj') }}</div>
                         @endif
@@ -57,10 +58,20 @@
                 <tbody>
                     @foreach ($customers as $customer)
                         <tr>
-                            <td scope="row">
-                                {{ $customer['status'] }}
+                            <td>
+                                @if ($customer->status == 1)
+                                    <button id="{{ $customer->id }}" name="status-button"
+                                        class="pr-3 btn btn-success">Ativo</button>
+                                @else
+                                    <button id="{{ $customer->id }}" name="status-button"
+                                        class="btn btn-outline-primary">Desativado</button>
+                                @endif
                             </td>
-                            <td>{{ $customer['nome'] }}</td>
+                            <td>
+                                <a href="{{ route('contact.index', $customer['id']) }}">
+                                    {{ $customer['nome'] }}
+                                </a>
+                            </td>
                             <td>{{ preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', "\$1.\$2.\$3/\$4-\$5", $customer['cnpj']) }}
                             </td>
                             <td>
