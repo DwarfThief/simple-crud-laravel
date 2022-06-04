@@ -17,8 +17,8 @@ class CustomerContactFactory extends Factory
     public function definition()
     {
         return [
-            'nome_contato' => $this->faker->name(),
-            'email_contato' => $this->faker->unique()->safeEmail(),
+            'nome_contact' => $this->faker->name(),
+            'email_contact' => $this->faker->unique()->safeEmail(),
             'cpf' => $this->faker->unique()->cpf(false),
         ];
     }

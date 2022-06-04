@@ -17,7 +17,7 @@ class CustomerFactory extends Factory
     public function definition()
     {
         return [
-            'nome' => $this->faker->name(),
+            'nome' => $this->faker->company(),
             'cnpj' => $this->faker->unique()->cnpj(false),
             'status' => rand(0, 1),
         ];
